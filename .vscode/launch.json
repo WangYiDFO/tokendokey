@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/main.go",
-            "args": ["get-token", "testclient"],
+            "args": ["login", "testclient", "offline-token"],
             "env": {},
             "cwd": "${workspaceFolder}"
         }
