@@ -90,7 +90,7 @@ var getTokenCmd = &cobra.Command{
 
 		accessToken, _ := os.ReadFile(accessTokenPath)
 		if len(accessToken) > 0 && isTokenValid(string(accessToken), "access") {
-			fmt.Println("Access token is still valid. Access Token:")
+			// fmt.Println("Access token is still valid. Access Token:")
 			fmt.Println(string(accessToken))
 			return
 		}
@@ -139,7 +139,7 @@ var getTokenCmd = &cobra.Command{
 		os.WriteFile(accessTokenPath, []byte(newAccessToken), 0644)
 		os.WriteFile(refreshTokenPath, []byte(newrefreshToken), 0644)
 
-		fmt.Println("New access token obtained successfully. Access Token:")
+		// fmt.Println("New access token obtained successfully. Access Token:")
 		fmt.Println(newAccessToken)
 	},
 }
