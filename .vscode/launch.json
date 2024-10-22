@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/main.go",
-            "args": ["login", "testclient", "offline-token"],
+            "args": ["export", "-c=testclient", "-f=.\terereere"],
             "env": {},
             "cwd": "${workspaceFolder}"
         }

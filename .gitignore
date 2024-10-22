@@ -25,6 +25,8 @@ go.work.sum
 .env
 tokendokey
 
-access-token.txt
+access_token.txt
 config.json
-refresh-token.txt
+refresh_token.txt
+
+*.zip
