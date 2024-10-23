@@ -4,8 +4,15 @@ Token Dokey is a small tool that enables you to log in to OAuth/OIDC services wi
 
 ## Getting Started
 
-### Example Command
-Build your command from this repo. Or download from the release of this repo.
+### Build Command
+Build your command from this repo. 
+Or simply download from the Releases of this repo.
+
+[tokendokey-linux-amd64-0.0.3.zip](https://github.com/user-attachments/files/17495610/tokendokey-linux-amd64-0.0.3.zip)
+
+[tokendokey-windows-amd64-0.0.3.zip](https://github.com/user-attachments/files/17495613/tokendokey-windows-amd64-0.0.3.zip)
+
+For other OS, please use source code to build yourself.
 
 #### Build on Unix-like Systems (Linux or macOS)
 Use the following command in your terminal:
@@ -73,6 +80,22 @@ tokendokey.exe get-token -c=myclient -f
 Run the following command to log out and remove access and refresh tokens:
 ```sh
 tokendokey.exe logout -c=myclient
+```
+
+#### List
+Run the following command to list the clients for current user:
+```sh
+tokendokey.exe list
+```
+When a clientname is provided, will display the settings of this client.
+```sh
+tokendokey.exe list -c=myclient
+```
+
+#### Delete
+Run the following command to delete settings of a client, by provide clientname:
+```sh
+tokendokey.exe delete -c=myclient
 ```
 
 #### Export/Import Configuration

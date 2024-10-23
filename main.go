@@ -15,6 +15,8 @@ func main() {
 	rootCmd.AddCommand(cmd.LogoutCmd)
 	rootCmd.AddCommand(cmd.ExportCmd)
 	rootCmd.AddCommand(cmd.ImportCmd)
+	rootCmd.AddCommand(cmd.ListCmd) // Register the new list command
+	rootCmd.AddCommand(cmd.DeleteCmd)
 
 	rootCmd.Execute()
 }
