@@ -9,8 +9,8 @@ Build your command from this repo.
 Or simply download from the Releases of this repo.
 Or download the pre-built binary file for below links:
 
-[tokendokey-linux-amd64-0.0.4.zip](https://github.com/user-attachments/files/17624154/tokendokey-linux-amd64-0.0.4.zip)
-[tokendokey-windows-amd64-0.0.4.zip](https://github.com/user-attachments/files/17624156/tokendokey-windows-amd64-0.0.4.zip)
+ - For Linux: [tokendokey-linux-amd64-0.0.4.zip](https://github.com/user-attachments/files/17624154/tokendokey-linux-amd64-0.0.4.zip)
+ - For Windows: [tokendokey-windows-amd64-0.0.4.zip](https://github.com/user-attachments/files/17624156/tokendokey-windows-amd64-0.0.4.zip)
 
 For other OS, please use source code to build yourself.
 
