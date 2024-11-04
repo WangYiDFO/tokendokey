@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,6 +16,22 @@ import (
 
 	"github.com/spf13/cobra"
 )
+
+// Generate a cryptographically secure random string as the code verifier
+func generateCodeVerifier() (string, error) {
+	verifier := make([]byte, 43)
+	_, err := rand.Read(verifier)
+	if err != nil {
+		return "", err
+	}
+	return base64.RawURLEncoding.EncodeToString(verifier), nil
+}
+
+// Hash the code verifier using SHA-256 and base64 URL encode it to create the code challenge
+func generateCodeChallenge(verifier string) (string, error) {
+	hash := sha256.Sum256([]byte(verifier))
+	return base64.RawURLEncoding.EncodeToString(hash[:]), nil
+}
 
 var LoginCmd = &cobra.Command{
 	Use:   "login -c=[client_name] [-o|--offline-token]",
@@ -51,10 +70,24 @@ If the -ot|--offline-token flag is provided, an offline token will be obtained i
 			return
 		}
 
+		// Generate code verifier and challenge
+		verifier, err := generateCodeVerifier()
+		if err != nil {
+			fmt.Println("Error generating code verifier:", err)
+			return
+		}
+		challenge, err := generateCodeChallenge(verifier)
+		if err != nil {
+			fmt.Println("Error generating code challenge:", err)
+			return
+		}
+
 		// Request device code
 		deviceCodeURL := config.DeviceCodeURL
 		deviceCodeReq := url.Values{
-			"client_id": {config.ClientID},
+			"client_id":             {config.ClientID},
+			"code_challenge":        {challenge},
+			"code_challenge_method": {"S256"},
 		}
 
 		if offlineToken {
@@ -95,9 +128,10 @@ If the -ot|--offline-token flag is provided, an offline token will be obtained i
 		// Poll for authorization
 		pollURL := config.TokenIssueURL
 		pollReq := url.Values{
-			"grant_type":  {"urn:ietf:params:oauth:grant-type:device_code"},
-			"device_code": {deviceCodeResponse["device_code"]},
-			"client_id":   {config.ClientID},
+			"grant_type":    {"urn:ietf:params:oauth:grant-type:device_code"},
+			"device_code":   {deviceCodeResponse["device_code"]},
+			"client_id":     {config.ClientID},
+			"code_verifier": {verifier},
 		}
 		for {
 			pollResp, err := http.Post(pollURL, "application/x-www-form-urlencoded", strings.NewReader(pollReq.Encode()))
