@@ -5,12 +5,22 @@
    "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug",
+            "name": "Debug login",
             "type": "go",
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/main.go",
-            "args": ["delete", "-c=testclient2"],
+            "args": ["login", "-c=clientname", "-o"],
+            "env": {},
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Debug mTLS",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/main.go",
+            "args": ["mtls-token", "-c=clientname", "-t=path/to/client-cert.pem", "-k=path/to/client-key.pem"],
             "env": {},
             "cwd": "${workspaceFolder}"
         }

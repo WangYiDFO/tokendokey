@@ -89,9 +89,12 @@ If the -ot|--offline-token flag is provided, an offline token will be obtained i
 			"code_challenge":        {challenge},
 			"code_challenge_method": {"S256"},
 		}
+		if config.ClientSecret != "" {
+			deviceCodeReq.Set("client_secret", config.ClientSecret)
+		}
 
 		if offlineToken {
-			deviceCodeReq.Add("scope", "offline_access")
+			deviceCodeReq.Add("scope", "email profile offline_access")
 		}
 
 		deviceCodeResp, err := http.Post(deviceCodeURL, "application/x-www-form-urlencoded", strings.NewReader(deviceCodeReq.Encode()))
@@ -133,6 +136,9 @@ If the -ot|--offline-token flag is provided, an offline token will be obtained i
 			"client_id":     {config.ClientID},
 			"code_verifier": {verifier},
 		}
+		if config.ClientSecret != "" {
+			pollReq.Set("client_secret", config.ClientSecret)
+		}
 		for {
 			pollResp, err := http.Post(pollURL, "application/x-www-form-urlencoded", strings.NewReader(pollReq.Encode()))
 			if err != nil {
@@ -151,12 +157,12 @@ If the -ot|--offline-token flag is provided, an offline token will be obtained i
 					// Authorization successful, obtain access token
 					newAccessToken := pollResponse["access_token"]
 					newrefreshToken := pollResponse["refresh_token"]
-					fmt.Println("Access token obtained:")
-					fmt.Println(newAccessToken)
-
 					// Write access token to file
 					os.WriteFile(accessTokenPath, []byte(newAccessToken), 0644)
 					os.WriteFile(refreshTokenPath, []byte(newrefreshToken), 0644)
+
+					fmt.Println("User logged in successfully, please use [tokendokey get-token --client=yourclient] to retrieve your Access token.")
+
 					return
 				}
 			}

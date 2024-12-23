@@ -2,6 +2,8 @@
 
 Token Dokey is a small tool that enables you to log in to OAuth/OIDC services with *Device Code flow* and retrieve your access token using a refresh token/offline token.
 
+**New Feature**: add new feature that can retrieive token with X509 Certificate via *Direct Grant flow*
+
 ## Getting Started
 
 ### Build Command
@@ -121,6 +123,23 @@ Export Command Options
 Import Command Options
 
 -c: Specify the client name to import the configuration for.
+
+#### Retrieve a New Access Token using mTLS Direct Grant Flow
+Run the following command to get a new access token using mTLS Direct Grant flow:
+```sh
+tokendokey.exe mtls-token -c=myclient -t=path/to/client.crt -k=path/to/client.key -r=path/to/ca.crt
+```
+This command will use the provided client certificate and key to authenticate and retrieve a new access token. The `caCert` parameter is optional and can be used to specify the CA certificate.
+
+Mtls-token Command Options
+
+-c: Specify the client name to export the configuration for.
+
+-t: Path to Client cert file
+
+-k: Path to Client key file
+
+-r: Path to Remote server cert file
 
 ## Contributing
 Feel free to fork this project, submit issues, and send pull requests. Contributions are always welcome!
